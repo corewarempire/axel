@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   init_process.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: akarasso <akarasso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/14 13:06:53 by adhondt           #+#    #+#             */
-/*   Updated: 2018/07/19 12:55:29 by akarasso         ###   ########.fr       */
+/*   Created: 2018/07/19 12:55:57 by akarasso          #+#    #+#             */
+/*   Updated: 2018/07/19 13:49:24 by akarasso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/corewar.h"
+#include "process.h"
 
-int	main(int argc, char **argv)
+int		init_process(t_board *board)
 {
-    t_board  *board;
+	unsigned int	i;
+	unsigned int	pc;
+	t_proccess		*proc;
 
-    if (argc != 3)
-    {
-        ft_putstr("Need 3 args\n");
-        exit (0);
-    };
-    board = init_board_data(board, argv);
-    insert_instructions(board);
-    execute_war(board);
-    return (0);
+	i = 0;
+	pc = 0;
+	while (i < board->nb_player)
+	{
+		if (!(proc = add_proccess(board->lst_process, i, pc)))
+			return (0);
+		pc += MEM_SIZE / board->nb_player;
+		i++;
+	}
+	return (1);
 }
